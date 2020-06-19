@@ -34,16 +34,16 @@ articles between 1964 and 2020*
 Installation
 ------------
 
-**Installing from the command line**
+**Option 1: Installing from the command line**
 0) Make sure you have a running Python 3 installation.
 1) Open a terminal (Linux or Mac OS X) or a command prompt (Windows)
 2) Run the following command: `pip install bibliobanana`
 
-**Installing from Python**
+**Option 2: Installing from Python**
 1) Open Python.
 2) Run the following commands:
 
-``` .python
+```python
 import pip
 pip.main(["install", "bibliobanana"])
 ```
@@ -56,7 +56,7 @@ and "banana". It uses the convenience function `compute_yearly_citations` to
 not only collect results from PubMed, but also save them in a text file, and 
 plot them in a graph.
 
-``` .python
+```python
 from bibliobanana import compute_yearly_citations
 
 # Define the search and reference terms.
@@ -87,7 +87,7 @@ field-specific term "magnetic resonance imaging". It also illustrates how you
 can use **bibliobanana**'s storage and reloading functions, and how to use the 
 different options in the plotting function.
 
-``` .python
+```python
 import os
 from bibliobanana import compute_yearly_citations, load_results_from_file, \
     plot_yearly_count
