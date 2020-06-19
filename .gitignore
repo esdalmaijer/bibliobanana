@@ -2,3 +2,5 @@ dist/
 build/
 bibliobanana.egg-info/
 upload_to_pypi.txt
+*.pyc
+**/__pycache__
