@@ -1,5 +1,4 @@
-Bibliographic banana for scale
-==============================
+# Bibliographic banana for scale
 
 If you're an academic, there's a big chance you've seen a graph of the yearly 
 number of publications on a topic. This will likely have shown an increase, 
@@ -16,8 +15,7 @@ changes in academic interest. It comes with the following features:
 
 - Loading bibliometric data from PubMed or Google Scholar on any topic
 
-- Normalising publication rates on one or more keywords of interest with one 
-or a collection of reference keywords.
+- Normalising publication rates on one or more keywords of interest with one or a collection of reference keywords.
 
 - Storing bibliographic data in neatly organised text files.
 
@@ -31,8 +29,7 @@ Example:
 articles between 1964 and 2020*
 
 
-Installation
-------------
+## Installation
 
 **Option 1: Installing from the command line**
 0) Make sure you have a running Python 3 installation.
@@ -48,8 +45,7 @@ import pip
 pip.main(["install", "bibliobanana"])
 ```
 
-Example 1
----------
+## Example 1
 
 This example compares the publication numbers of articles referencing "farts" 
 and "banana". It uses the convenience function `compute_yearly_citations` to 
@@ -79,8 +75,7 @@ result = compute_yearly_citations(search_term, start_date, end_date, \
     verbose=True, save_to_file=save_file+".csv", plot_to_file=save_file+".png")
 ```
 
-Example 2
----------
+## Example 2
 
 This example implements a comparison between several brain areas and the 
 field-specific term "magnetic resonance imaging". It also illustrates how you 
