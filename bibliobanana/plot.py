@@ -59,9 +59,14 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
 
     # Plot the results together if the user opted for this.
     if plot_average_comparison and not plot_ratio:
+        # Choose the label for the line.
+        if len(result_dict["_comparison"]) > 1:
+            lbl = "comparison"
+        else:
+            lbl = result_dict["_comparison"][0]
         # Plot the average and confidence intervals.
         ax.plot(result_dict["_year_range"], m, "-", lw=2, \
-            color=_colour_for_comparison, label="comparison")
+            color=_colour_for_comparison, label=lbl)
         highest = numpy.max(m)
         if ci is not None:
             ax.fill_between(result_dict["_year_range"], m, m-ci, m+ci, \
@@ -150,7 +155,7 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
     # Set the y label.
     if plot_ratio:
         if (len(result_dict["_comparison"]) == 1) and \
-        (result_dict["_comparison"][0] in ["banana", "\"banana\"", "\'banana\'"]):
+        (result_dict["_comparison"][0] in ["banana","\"banana\"","\'banana\'"]):
             ylbl = "Banana ratio"
         else:
             ylbl = "Relative publication ratio"
