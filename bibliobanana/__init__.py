@@ -1,5 +1,8 @@
+# Part of bibliobanana, by Edwin Dalmaijer
+# https://github.com/esdalmaijer/bibliobanana
+
 __author__ = "Edwin Dalmaijer"
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 import os
 import copy

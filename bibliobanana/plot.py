@@ -1,3 +1,6 @@
+# Part of bibliobanana, by Edwin Dalmaijer
+# https://github.com/esdalmaijer/bibliobanana
+
 import numpy
 from matplotlib import pyplot
 
@@ -9,13 +12,17 @@ _colour_for_comparison = "#c4a000"
 
 def plot_yearly_count(result_dict, plot_ratio=False, \
     plot_average_comparison=True, scale_to_max=False, \
-    figsize=(8.0,6.0), dpi=100.0):
+    ax=None, figsize=(8.0,6.0), dpi=100.0):
     
     """Plots the results from a result_dict.
     """
     
     # Create a new figure.
-    fig, ax = pyplot.subplots(figsize=figsize, dpi=dpi)
+    if ax is None:
+        fig, ax = pyplot.subplots(figsize=figsize, dpi=dpi)
+        fig.subplots_adjust(left=0.11, right=0.99, bottom=0.13, top=0.99)
+    else:
+        fig = ax.get_figure()
     # We'll be keeping track of the maximum result (to scale the y axis), so
     # we start at 0. (It will be updated as we go along.)
     max_result = 0
@@ -95,12 +102,30 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
             max_result = numpy.max(y)
         
     # If we have more than 10 years, only write ticks on the even years.
-    if len(result_dict["_year_range"]) > 10:
+    if 30 >= len(result_dict["_year_range"]) > 10:
         # The starting index (si) should be 0 if the first year is even, and
         # 1 if the first year is odd.
         si = result_dict["_year_range"][0] % 2
         # Create a list of indices to slice only the even years.
         xi = range(si, len(result_dict["_year_range"]), 2)
+        # Create empty tick labels for all recorded years. (Note: This will
+        # only work for years -999 to 9999; just up the number in "|U4" if
+        # you're somehow still using this in the future, or want to include
+        # references earlier than 999 BC.
+        xticklabels = numpy.zeros(len(result_dict["_year_range"]), dtype="|U4")
+        xticklabels[xticklabels=="0"] = ""
+        # Set only the recorded year tick labels.
+        xticklabels[xi] = numpy.array(result_dict["_year_range"])[xi]
+    # If we have more than 30 years, only write ticks every 5 years.
+    elif len(result_dict["_year_range"]) > 30:
+        # Find the lowest year that is divisible by 5.
+        si = None
+        for i in range(len(result_dict["_year_range"])):
+            if result_dict["_year_range"][i] % 5 == 0:
+                si = i
+                break
+        # Create a list of indices to slice only the %5 years.
+        xi = range(si, len(result_dict["_year_range"]), 5)
         # Create empty tick labels for all recorded years. (Note: This will
         # only work for years -999 to 9999; just up the number in "|U4" if
         # you're somehow still using this in the future, or want to include
@@ -115,7 +140,7 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
     # Set the x ticks (for all recorded years) and x tick labels (created
     # above; either for all years or only for even years.)
     ax.set_xticks(result_dict["_year_range"])
-    ax.set_xticklabels(map(str, xticklabels), fontsize=12, rotation=85)
+    ax.set_xticklabels(map(str, xticklabels), fontsize=16, rotation=85)
     # Set the axis limits. For the x-axis, this is the first year minus 1,
     # and the last year plus one. For the y-axis, this is 0 to the maximum
     # number of search results plus a small margin.
@@ -125,7 +150,7 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
     # Set the y label.
     if plot_ratio:
         if (len(result_dict["_comparison"]) == 1) and \
-        (result_dict["_comparison"][0] == "banana"):
+        (result_dict["_comparison"][0] in ["banana", "\"banana\"", "\'banana\'"]):
             ylbl = "Banana ratio"
         else:
             ylbl = "Relative publication ratio"
@@ -133,8 +158,8 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
         ylbl = "Number of publications"
     if scale_to_max:
         ylbl += " (max-scaled)"
-    ax.set_ylabel(ylbl, fontsize=16)
+    ax.set_ylabel(ylbl, fontsize=20)
     # Draw the legend.
-    ax.legend(loc="upper left", fontsize=12)
+    ax.legend(loc="upper left", fontsize=16)
     
     return fig, ax

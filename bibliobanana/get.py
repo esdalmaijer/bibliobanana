@@ -1,11 +1,5 @@
-# 
-#
-# This is based on a script by Volker Strobel, which was later improved by 
-# Patrick Hofmann. For the original, see:
-# https://github.com/Pold87/academic-keyword-occurrence
-#
-# Further changes made by Edwin Dalmaijer.
-# 
+# Part of bibliobanana, by Edwin Dalmaijer
+# https://github.com/esdalmaijer/bibliobanana
 
 from bs4 import BeautifulSoup
 from urllib.request import Request, build_opener
@@ -30,6 +24,12 @@ def get_num_results_scholar(search_term, start_date, end_date):
                         case of an Exception, the returned num will actually
                         be a str clarifying the error.
     """
+
+    # This is based on a script by Volker Strobel, which was later improved by 
+    # Patrick Hofmann. For the original, see:
+    # https://github.com/Pold87/academic-keyword-occurrence
+    #
+    # Further changes made by Edwin Dalmaijer.
 
     # Open website and read html
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36'
@@ -106,7 +106,7 @@ def get_num_results_pubmed(search_term, year):
 
 
 def get_yearly_count(search_term, start_date, end_date, database="pubmed", \
-    pause=1.0, verbose=False):
+    exact_phrase=True, pause=1.0, verbose=False):
     
     """Returns a list with the yearly hit count for search_term from
     start_date until end_date (inclusive).
@@ -135,6 +135,12 @@ def get_yearly_count(search_term, start_date, end_date, database="pubmed", \
                         Scholar, which might flag and block suspiciously fast
                         and/or numerous requests. Default = 1.0
     
+    exact_phrase    -   bool. Set to True to see automatically add quotes to
+                        your search query. This ensures you search for exact
+                        matches with your query, e.g. "prefrontal cortex"
+                        instead of "prefrontal" and/or "cortex".
+                        Default = True
+    
     verbose         -   bool. Set to True to see output printed to the console
                         with each year's count as it comes in. Default = False
 
@@ -143,6 +149,10 @@ def get_yearly_count(search_term, start_date, end_date, database="pubmed", \
     result          -   list. The yearly count of papers mentioning "banana",
                         with len(result) == end_date - start_date.
     """
+    
+    # Add quotes if required.
+    if exact_phrase:
+        search_term = "\"{}\"".format(search_term)
     
     # Find the correct database.
     if database.lower() in ["google scholar", "googlescholar", "scholar", \
@@ -163,7 +173,8 @@ def get_yearly_count(search_term, start_date, end_date, database="pubmed", \
         # Google Scholar
         if database == "google scholar":
             # Count the number of search results for this year.
-            num_result, success = get_num_results_scholar(search_term, date, date)
+            num_result, success = get_num_results_scholar(search_term, date, \
+                date)
         # PubMed
         elif database == "pubmed":
             # Count the number of search results for this year.

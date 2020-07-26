@@ -1,3 +1,6 @@
+# Part of bibliobanana, by Edwin Dalmaijer
+# https://github.com/esdalmaijer/bibliobanana
+
 import os
 
 
