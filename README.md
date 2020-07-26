@@ -23,18 +23,18 @@ changes in academic interest. It comes with the following features:
 
 Example:
 
-![Graph illustrating the yearly number of papers referencing "banana" and "farts" on PubMed](farts_1964-2020.png)
+![Graph illustrating the yearly number of papers referencing "banana" or "flatulence" on PubMed](flatulence_1964-2020.png)
 
-*Occurence of the word "fart" versus the word "banana" in PubMed-indexed 
+*Occurence of the word "flatulence" versus the word "banana" in PubMed-indexed 
 articles between 1964 and 2020*
 
 
 ## Installation
 
 **Option 1: Installing from the command line**
-0) Make sure you have a running Python 3 installation.
-1) Open a terminal (Linux or Mac OS X) or a command prompt (Windows)
-2) Run the following command: `pip install bibliobanana`
+1) Make sure you have a running Python 3 installation.
+2) Open a terminal (Linux or Mac OS X) or a command prompt (Windows)
+3) Run the following command: `pip install bibliobanana`
 
 **Option 2: Installing from Python**
 1) Open Python.
@@ -47,16 +47,16 @@ pip.main(["install", "bibliobanana"])
 
 ## Example 1
 
-This example compares the publication numbers of articles referencing "farts" 
-and "banana". It uses the convenience function `compute_yearly_citations` to 
-not only collect results from PubMed, but also save them in a text file, and 
-plot them in a graph.
+This example compares the publication numbers of articles referencing 
+"flatulence" or "banana". It uses the convenience function 
+`compute_yearly_citations` to not only collect results from PubMed, but also 
+save them in a text file, and plot them in a graph.
 
 ```python
 from bibliobanana import compute_yearly_citations
 
 # Define the search and reference terms.
-search_term = "farts"
+search_term = "flatulence"
 comparison_term = "banana"
 # Define the range of years to search in (both end-points are included).
 start_date = 1964
@@ -110,8 +110,8 @@ if not os.path.isfile(save_file+".csv"):
     print("Getting data from PubMed...")
     result = compute_yearly_citations(search_terms, start_date, end_date, \
         comparison_terms=comparison_terms, database="pubmed", \
-        pause=0.5, verbose=True, save_to_file=save_file+".csv", \
-        plot_to_file=None)
+        exact_phrase=True, pause=0.5, verbose=True, \
+        save_to_file=save_file+".csv", plot_to_file=None)
 # Load from an existing file.
 else:
     print("Loading data from file...")
