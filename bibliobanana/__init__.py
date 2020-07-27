@@ -2,7 +2,7 @@
 # https://github.com/esdalmaijer/bibliobanana
 
 __author__ = "Edwin Dalmaijer"
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 
 import os
 import copy

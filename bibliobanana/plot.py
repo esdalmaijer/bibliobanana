@@ -93,6 +93,10 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
     for i, term in enumerate(result_dict["_target"]):
         # Pick the next colour in the list.
         col = _colours[i % len(_colours)]
+        # Overwrite the plot colour if there is no comparison, and the term
+        # happens to be banana. This, obviously, turns the colour to yellow.
+        if plot_ratio and term in ["banana","\"banana\"","\'banana\'"]:
+            col = "#c4a000"
         # Compute the result.
         y = numpy.array(result_dict[term], dtype=numpy.float64)
         if scale_to_max:
