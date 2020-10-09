@@ -76,6 +76,26 @@ def get_num_results_scholar(search_term, start_date, end_date):
 
 def get_num_results_pubmed(search_term, year):
     
+    # If you're reading this, thinking "What could I do to change the search
+    # fields? The following are valid fields in Entrez:
+    # [AFFL]    - Affiliation
+    # [ALL]     - All Fields
+    # [AUTH]    - Author
+    # [FAUT]    - Author - First
+    # [LAUT]    - Author - Last
+    # [PDAT]    - Date - Publication
+    # [FILT]    - Filter
+    # [JOUR]    - Journal
+    # [LANG]    - Language
+    # [MAJR]    - MeSH Major Topic
+    # [SUBH]    - MeSH Subheading
+    # [MESH]    - MeSH Terms
+    # [PTYP]    - Publication Type
+    # [WORD]    - Text Word
+    # [TITL]    - Title
+    # [TIAB]    - Title/Abstract
+    # [UID]     - UID
+
     # Make the search term URL-friendly.
     url_search_term = urllib.parse.quote(search_term)
 
