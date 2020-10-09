@@ -53,7 +53,7 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
     else:
         m = numpy.array(result_dict[result_dict["_comparison"][0]], \
             dtype=numpy.float64)
-        if scale_to_max:
+        if scale_to_max and numpy.max(m) > 0:
             m /= numpy.max(m)
         ci = None
 
@@ -81,7 +81,7 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
         # Plot the results.
         for term in result_dict["_comparison"]:
             y = numpy.array(result_dict[term], dtype=numpy.float64)
-            if scale_to_max:
+            if scale_to_max and numpy.max(y) > 0:
                 y /= numpy.max(y)
             ax.plot(result_dict["_year_range"], y, "-", lw=2, \
                 color=_colour_for_comparison, label=term)
@@ -99,16 +99,21 @@ def plot_yearly_count(result_dict, plot_ratio=False, \
             col = "#c4a000"
         # Compute the result.
         y = numpy.array(result_dict[term], dtype=numpy.float64)
-        if scale_to_max:
+        if scale_to_max and numpy.max(y) > 0:
             y /= numpy.max(y)
         if plot_ratio:
-            y /= m
+            y[m>0] /= m[m>0]
+            # If the reference keyword is 0, comparisons make no sense. The
+            # expected behaviour here could perhaps be to set the keyword
+            # ratio to infinite, but given the futility of such a comparison,
+            # perhaps NaN or 0 are better options.
+            y[m==0] = numpy.NaN
         # Plot the line for the result.
         ax.plot(result_dict["_year_range"], y, "-", lw=2, color=col, \
             label=term)
         # Check if this term's maximum is higher than the current.
-        if numpy.max(y) > max_result:
-            max_result = numpy.max(y)
+        if numpy.nanmax(y) > max_result:
+            max_result = numpy.nanmax(y)
         
     # If we have more than 10 years, only write ticks on the even years.
     if 30 >= len(result_dict["_year_range"]) > 10:
