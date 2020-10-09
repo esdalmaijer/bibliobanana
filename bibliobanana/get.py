@@ -82,7 +82,7 @@ def get_num_results_pubmed(search_term, year):
     # Construct the query string.
     url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" + \
         "db=pubmed&retmode=json&rettype=count&" + \
-        "term={}+AND+{}[pdat]".format(url_search_term, year)
+        "term={}[All Fields]+AND+{}[pdat]".format(url_search_term, year)
     
     # Make the search.
     opener = build_opener()
