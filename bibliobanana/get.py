@@ -74,7 +74,7 @@ def get_num_results_scholar(search_term, start_date, end_date):
     return num_results, success
 
 
-def get_num_results_pubmed(search_term, year):
+def get_num_results_pubmed(search_term, year, field="word"):
     
     # If you're reading this, thinking "What could I do to change the search
     # fields? The following are valid fields in Entrez:
@@ -102,7 +102,7 @@ def get_num_results_pubmed(search_term, year):
     # Construct the query string.
     url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" + \
         "db=pubmed&retmode=json&rettype=count&" + \
-        "term={}[word]+AND+{}[pdat]".format(url_search_term, year)
+        "term={}[{}]+AND+{}[pdat]".format(url_search_term, field, year)
     
     # Make the search.
     opener = build_opener()
@@ -126,7 +126,7 @@ def get_num_results_pubmed(search_term, year):
 
 
 def get_yearly_count(search_term, start_date, end_date, database="pubmed", \
-    exact_phrase=True, pause=1.0, verbose=False):
+    exact_phrase=True, pubmed_field="word", pause=1.0, verbose=False):
     
     """Returns a list with the yearly hit count for search_term from
     start_date until end_date (inclusive).
@@ -198,7 +198,8 @@ def get_yearly_count(search_term, start_date, end_date, database="pubmed", \
         # PubMed
         elif database == "pubmed":
             # Count the number of search results for this year.
-            num_result, success = get_num_results_pubmed(search_term, date)
+            num_result, success = get_num_results_pubmed(search_term, date, \
+                field=pubmed_field)
         
         # Handle any exceptions.
         if not(success):
