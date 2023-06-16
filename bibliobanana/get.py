@@ -20,7 +20,7 @@ def get_num_results_scholar(search_term, start_date, end_date):
     
     num, success    -   [int, bool]. num gives the count of papers mentioning 
                         search_term for given range (start_date - end_date).
-                        success == False when the search didn't retrun. In the
+                        success == False when the search didn't return. In the
                         case of an Exception, the returned num will actually
                         be a str clarifying the error.
     """
