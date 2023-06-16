@@ -25,7 +25,7 @@ Example:
 
 ![Graph illustrating the yearly number of papers referencing "banana" or "flatulence" on PubMed](flatulence_1964-2020.png)
 
-*Occurence of the word "flatulence" versus the word "banana" in PubMed-indexed 
+*Occurrence of the word "flatulence" versus the word "banana" in PubMed-indexed 
 articles between 1964 and 2020*
 
 
